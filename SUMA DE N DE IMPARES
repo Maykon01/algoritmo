@@ -1,0 +1,19 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+using namespace std;
+
+int main()
+{
+int i,s,n;
+cout<< "Ingrese un numero para la serie: ";
+cin>> n;
+	s=0;
+	for(i=1;i<=n;i++)
+	if(i%2!=0)
+	s=s+1;
+	cout<< "la suma es: ";
+	cout<<s;
+	getch();
+} 
