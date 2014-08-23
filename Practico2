@@ -1,0 +1,88 @@
+#include <iostream>
+#include "stdlib.h"
+
+using namespace std;
+
+
+int sumaInpar(int  num )
+{   int acu = 1,cont = 1;
+if(num != 1){
+do{   
+acu = acu + 2; 
+        cont++;
+    }while(cont < num);
+
+}
+else if( num == 1){  
+return (acu);
+}
+else {  return (0);}
+return(acu);
+}
+int sumaPar(int num){
+int acu = 0,cont = 1;
+
+if(num != 1)
+{ do{  acu = acu + 2;
+    cont++;
+  }
+while(cont < num);
+
+}
+else if( num == 1)
+{  return (acu);}
+else{  return (0);}   
+return(acu);
+}
+int sumaInparW(int num ){
+ int acu = 1,cont = 1;
+  while(cont < num)
+  {  
+    acu = acu + 2;
+cont++;
+  }
+   return (acu);
+
+}
+int main()
+{  int op,n,r;
+   
+do{  
+cout<<endl<<"    MENU   ";
+cout<<endl<<" 0 salur  "<
+         cout<<endl<<"  1 impares do while  ";
+cout<<endl<<"  2  pares do while  ";
+cout<<endl<<"  3 impares  do while  ";
+cout<<endl<<"opcion:";
+cin>>op;
+        switch(op)
+{    ///suma  impares con do while 
+    case 1:     
+    cout<<endl<<" introdusa N:";
+    cin>>n;  
+   sumaInpar(n);
+  r =   sumaInpar(n);   /// recibe el resultado 
+  cout<<endl<<" la suma es :"<<r; //muestra el resultado 
+   break;
+case 2:
+cout<<endl<<" introdusca N :";
+cin>>n;
+sumaPar(n);  // en via el numero 
+r = sumaPar(n); // recibe el resultado
+cout<<endl<<" la suma es :"<<r;  // muestra del resultado 
+break;
+case 3:
+cout<<endl<<" introdusca N :";
+cin>>n;
+sumaInparW(n);  // en via el numero 
+r = sumaInparW(n); // recibe el resultado
+cout<<endl<<" la suma es :"<<r;  // mustra del resultado 
+break;
+}
+}while(op  != 0);
+
+
+
+   system("pause");
+}
+
