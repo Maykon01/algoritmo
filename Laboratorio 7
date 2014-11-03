@@ -1,0 +1,467 @@
+//Autor: Maykon Mamani
+//Nro de Registro: 2012115870
+//Tema: Tarea Laboratorio 7
+#include <iostream>
+#include <string>
+#include "conio.h"
+using namespace std;
+#define NMAX 100
+struct Datos
+{
+string nombre;
+string pais;
+};
+struct Atleta
+{
+Datos datos;
+string deporte;
+int NroDeMedallas;
+};
+struct Empleado
+{
+string nombre;
+char sexo;
+double sueldo;
+};
+struct Vector
+{
+int vec[NMAX];
+};
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+void MostrarMenu()
+{
+system("cls");
+cout<<
+"\n\n\n\n\n\n\t\t\t\t\t\tMenu Principal"<<
+"\n\n\t\t\t\t\t\t1.)Invertir"<<
+"\n\n\t\t\t\t\t\t2.)Salario"<<
+"\n\n\t\t\t\t\t\t3.)Atleta"<<
+"\n\n\t\t\t\t\t\t0.)Salir"
+<<endl;
+}
+void MostrarMenuVector()
+{
+system("cls");
+cout<<
+"\n\n\n\n\n\n\t\t\t\t\t\tMenu Vector"<<
+"\n\n\t\t\t\t\t\t1.)Cargar Vector"<<
+"\n\n\t\t\t\t\t\t2.)Invertir"<<
+"\n\n\t\t\t\t\t\t3.)Mostrar Vector"<<
+"\n\n\t\t\t\t\t\t0.)Salir"
+<<endl;
+}
+void MostrarMenuSalarios()
+{
+system("cls");
+cout<<
+"\n\n\n\n\n\n\t\t\t\t\t\tMenu Empleados"<<
+"\n\n\t\t\t\t\t\t1.)Adicionar Empleados"<<
+"\n\n\t\t\t\t\t\t2.)Empleado Con Salario Mayos"<<
+"\n\n\t\t\t\t\t\t3.)Empelado con Salario Menor"<<
+"\n\n\t\t\t\t\t\t4.)Moda"<<
+"\n\n\t\t\t\t\t\t5.)Mostrar Empleados"<<
+"\n\n\t\t\t\t\t\t0.)Salir"
+<<endl;
+}
+void MostrarMenuAtletas()
+{
+system("cls");
+cout<<
+"\n\n\n\n\n\n\t\t\t\t\t\tMenu Vector"<<
+"\n\n\t\t\t\t\t\t1.)Adicionar Atletas"<<
+"\n\n\t\t\t\t\t\t2.)Atleta Con Mayor Numero De Medallas"<<
+"\n\n\t\t\t\t\t\t3.)Mostrar Atletas"<<
+"\n\n\t\t\t\t\t\t0.)Salir"
+<<endl;
+}
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+int ValidarIntegrales()
+{int input;
+for(;;)
+{
+cin>>input;
+if(cin.fail())
+{
+cin.clear();
+cin.ignore(256,'\n');
+cout<<"\n\n\t\t\t\t\t\tError Datos No Validos...\n\n\t\t\t\t\t\tIntente Nuevamente: ";
+}
+else
+return input;
+}
+}
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+void MostrarVector(Vector vector[], int tamaño)
+{ 
+system("cls");
+cout<<"\n\n\n\n\n\n\t\t\t\t\t\tVector:\n\n"<<endl;
+for(int i=0;i<tamaño;i++)
+{
+cout<<endl<<"\t\t\t\t\t\t";
+for(int j=0;j<tamaño;j++)
+{
+cout<<"["<<vector[i].vec[j]<<"] ";
+}
+}
+cout<<"\n\n\t\t\t\t\t\tPresione Cualquier Tecla Para Continuar..."<<endl;
+_getch();
+}
+void Invertir(Vector vector[], int tamaño)
+{
+for(int i=0;i<tamaño;i++)
+{
+for(int j=0;j<tamaño/2;j++)
+{
+int aux=vector[i].vec[j];
+vector[i].vec[j]=vector[i].vec[tamaño-1-j];
+vector[i].vec[tamaño-1-j]=aux;
+}
+}
+}
+void CargarVector(Vector vector[], int tamaño)
+{
+for(int i=0;i<tamaño;i++)
+{
+for(int j=0;j<tamaño;j++)
+{
+cout<<"\n\n\t\t\t\t\t\tvec["<<j+1<<"]: ";
+cin>>vector[i].vec[j];
+}
+}
+}
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+void MostrarEmpleados(Empleado empleado[], int primero, int ultimo)
+{ 
+system("cls");
+cout<<"\n\n\n\n\n\n\t\t\t\t\t\tEmpleados:\n\n"<<endl;
+for(int i=primero;i<ultimo;i++)
+{
+cout<<
+"\n\n\n\t\t\t\t\t\tEmpleado No["<<i+1<<"]:\n"<<
+"\n\n\t\t\t\t\t\tNombre: "<<empleado[i].nombre<<
+"\n\n\t\t\t\t\t\tSexo: "<<empleado[i].sexo<<
+"\n\n\t\t\t\t\t\tSalario: "<<empleado[i].sueldo<<
+"\n\n\n\t\t\t\t\t\t___________________________________________________"<<
+endl;
+}
+cout<<"\n\n\t\t\t\t\t\tPresione Cualquier Tecla Para Continuar..."<<endl;
+_getch();
+}
+void MostrarModa(string nombre, char sexo, double sueldo)
+{
+system("cls");
+cout<<
+"\n\n\n\n\n\n\t\t\t\t\t\tModa:\n\n"<<
+"\n\t\t\t\t\t\tModa Nombre: "<<nombre<<
+"\n\t\t\t\t\t\tModa Sexo: "<<sexo<<
+"\n\t\t\t\t\t\tModa Salario: "<<sueldo<<
+"\n\n\t\t\t\t\t\tPresione Cualquier Tecla Para Continuar..."<<
+endl;
+_getch();
+}
+////////////////////////////////////////////////////////////
+string ModaNombre(Empleado empleado[], int cantidad)
+{string moda;
+int cont=0;
+for(int i=0;i<cantidad;i++)
+{
+int temp=0;
+for(int j=i;j<cantidad;j++)
+{
+if(empleado[i].nombre==empleado[j].nombre)
+temp++;
+}
+if(temp>cont)
+{
+moda=empleado[i].nombre;
+cont=temp;
+}
+}
+return moda;
+}
+char ModaSexo(Empleado empleado[], int cantidad)
+{char moda=NULL;
+int cont=0;
+for(int i=0;i<cantidad;i++)
+{
+int temp=0;
+for(int j=i;j<cantidad;j++)
+{
+if(empleado[i].nombre==empleado[j].nombre)
+temp++;
+}
+if(temp>cont)
+{
+moda=empleado[i].sexo;
+cont=temp;
+}
+}
+return moda;
+}
+double ModaSalario(Empleado empleado[], int cantidad)
+{double moda=0;
+int cont=0;
+for(int i=0;i<cantidad;i++)
+{
+int temp=0;
+for(int j=i;j<cantidad;j++)
+{
+if(empleado[i].sueldo==empleado[j].sueldo)
+temp++;
+}
+if(temp>cont)
+{
+moda=empleado[i].sueldo;
+cont=temp;
+}
+}
+return moda;
+}
+///////////////////////////////////////////////////////////
+Empleado Moda(Empleado empleado[], int cantidad)
+{Empleado moda;
+moda.nombre=ModaNombre(empleado,cantidad);
+moda.sexo=ModaSexo(empleado,cantidad);
+moda.sueldo=ModaSalario(empleado,cantidad);
+return moda;
+}
+int EmpleadoSalarioMayor(Empleado empleado[], int cantidad)
+{double mayor=-1;
+int j=0;
+for(int i=0;i<cantidad;i++)
+{
+if((empleado[i].sueldo)>mayor)
+{
+j=i;
+mayor=empleado[i].sueldo;
+}
+}
+return j;
+}
+int EmpleadoSalarioMenor(Empleado empleado[], int cantidad)
+{double menor=empleado[0].sueldo;
+int j=0;
+for(int i=1;i<cantidad;i++)
+{
+if((empleado[i].sueldo)<menor)
+{
+j=i;
+menor=empleado[i].sueldo;
+}
+}
+return j;
+}
+void AñadirEmpleados(Empleado empleado[], int cantidad)
+{
+for(int i=0;i<cantidad;i++)
+{
+system("cls");
+cout<<
+"\n\n\n\t\t\t\t\t\tEmpleado No["<<i+1<<"]:\n"<<
+"\n\n\t\t\t\t\t\tNombre: ";
+cin.sync();
+getline(cin,empleado[i].nombre);
+cout<<"\n\n\t\t\t\t\t\tSexo: ";
+cin>>empleado[i].sexo;
+cout<<"\n\n\t\t\t\t\t\tSalario: ";
+cin>>empleado[i].sueldo;
+}
+}
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+void MostrarAtletas(Atleta atleta[], int primero, int ultimo)
+{
+system("cls");
+for(int i=primero;i<ultimo;i++)
+{
+cout<<
+"\n\n\n\t\t\t\t\t\tAtleta No["<<i+1<<"]: "<<
+"\n\t\t\t\t\t\tNombre: "<<atleta[i].datos.nombre<<
+"\n\t\t\t\t\t\tPais: "<<atleta[i].datos.pais<<
+"\n\t\t\t\t\t\tDeporte: "<<atleta[i].deporte<<
+"\n\t\t\t\t\t\tNumero de Medallas: "<<atleta[i].NroDeMedallas<<
+"\n\n\n\t\t\t\t\t\t___________________________________________________"<<
+endl;
+}
+cout<<"\n\n\t\t\t\t\t\tPresione Cualquier Tecla Para Continuar..."<<endl;
+_getch();
+}
+int MayorNumeroDeMedallas(Atleta atleta[], int cantidad)
+{int j=0, mayor=-1;
+for(int i=0;i<cantidad;i++)
+{
+if(atleta[i].NroDeMedallas>mayor)
+{
+mayor=atleta[i].NroDeMedallas;
+j=i;
+}
+}
+return j;
+}
+void AdicionarAtletas(Atleta atleta[], int cantidad)
+{
+for(int i=0;i<cantidad;i++)
+{
+system("cls");
+cout<<"\n\n\n\t\t\t\t\t\tAtleta No["<<i+1<<"]: "<<endl;
+cin.sync();
+cout<<"\n\n\t\t\t\t\t\tNombre: ";
+getline(cin,atleta[i].datos.nombre);
+cin.sync();
+cout<<"\n\n\t\t\t\t\t\tPais: ";
+getline(cin,atleta[i].datos.pais);
+cin.sync();
+cout<<"\n\n\t\t\t\t\t\tDeporte: ";
+getline(cin,atleta[i].deporte);
+cout<<"\n\n\t\t\t\t\t\tNumero De Medallas: ";
+cin>>atleta[i].NroDeMedallas;
+}
+}
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+void MenuAtletas()
+{int op, cantidad=0, a=0, pos=0;
+bool salir=false;
+Atleta atleta[NMAX];
+while(!salir)
+{
+MostrarMenuAtletas();
+cout<<"\n\n\t\t\t\t\t\tOpcion: ";
+op=ValidarIntegrales();
+switch(op)
+{
+case 1:
+cout<<"\n\n\t\t\t\t\t\tCantidad de Atletas: ";
+cantidad=ValidarIntegrales();
+AdicionarAtletas(atleta,cantidad);
+MostrarAtletas(atleta,0,cantidad);
+break;
+case 2:
+pos=MayorNumeroDeMedallas(atleta,cantidad);
+MostrarAtletas(atleta,pos,pos+1);
+break;
+case 3: MostrarAtletas(atleta,0,cantidad); break;
+break;
+case 0:
+salir=true;
+break;
+default: cout<<"\n\n\t\t\t\t\t\t\t\t\tError Opcion No Valida..."<<endl; break;
+}
+}
+}
+void MenuSalarios()
+{int op=0, cantidad=0, pos=0, a=0;
+bool salir=false;
+Empleado empleado[NMAX], moda;
+while(!salir)
+{
+MostrarMenuSalarios();
+cout<<"\n\n\t\t\t\t\t\tOpcion: ";
+op=ValidarIntegrales();
+switch(op)
+{
+case 1: 
+cout<<"\n\n\t\t\t\t\t\tCantidad de Empleados: ";
+cantidad=ValidarIntegrales();
+AñadirEmpleados(empleado,cantidad);
+MostrarEmpleados(empleado,0,cantidad);
+a++;
+break;
+case 2:
+if(a>1)
+{
+pos=EmpleadoSalarioMayor(empleado,cantidad);
+MostrarEmpleados(empleado,pos,pos+1);
+}
+else
+cout<<"\n\n\t\t\t\t\t\tError...Primero Cargar Vector"<<endl;
+break;
+case 3:
+if(a>1)
+{
+pos=EmpleadoSalarioMenor(empleado,cantidad);
+MostrarEmpleados(empleado,pos,pos+1);
+}
+else
+cout<<"\n\n\t\t\t\t\t\tError...Primero Cargar Vector"<<endl;
+break;
+case 4:
+if(a>1)
+{
+moda=Moda(empleado,cantidad);
+MostrarModa(moda.nombre,moda.sexo,moda.sueldo);
+}
+else
+cout<<"\n\n\t\t\t\t\t\tError...Primero Cargar Vector"<<endl;
+break;
+case 5:
+MostrarEmpleados(empleado,0,cantidad);
+break;
+case 0:
+salir=true;
+break;
+default: cout<<"\n\n\t\t\t\t\t\tError Opcion No Valida..."<<endl; break;
+}
+}
+}
+void MenuVector()
+{int op=0, tamaño=0, a=0;
+bool salir=false;
+Vector vector[NMAX];
+while(!salir)
+{
+MostrarMenuVector();
+cout<<"\n\n\t\t\t\t\t\tOpcion: ";
+op=ValidarIntegrales();
+switch(op)
+{
+case 1:
+cout<<"\n\n\t\t\t\t\t\tTamaño del Vector: ";
+tamaño=ValidarIntegrales();
+CargarVector(vector,tamaño);
+MostrarVector(vector,tamaño);
+a++;
+break;
+case 2:
+if(a>1)
+{
+Invertir(vector,tamaño);
+MostrarVector(vector,tamaño);
+}
+else
+cout<<"\n\n\t\t\t\t\t\tError...Primero Cargar Vector"<<endl;
+break;
+case 3: MostrarVector(vector,tamaño); break;
+case 0:
+salir=true;
+break;
+default: cout<<"\n\n\t\t\t\t\t\tError Opcion No Valida..."<<endl; break;
+}
+}
+}
+void Menu()
+{int op;
+bool salir=false;
+while(!salir)
+{
+MostrarMenu();
+cout<<"\n\n\t\t\t\t\t\tOpcion: ";
+op=ValidarIntegrales();
+switch(op)
+{
+case 1: MenuVector(); break;
+case 2: MenuSalarios(); break;
+case 3: MenuAtletas(); break;
+case 0: salir=true; break;
+default: cout<<"\n\n\t\t\t\t\t\t\t\t\tError Opcion No Valida..."<<endl; break;
+}
+}
+}
+int main()
+{
+Menu();
+}
