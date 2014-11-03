@@ -1,0 +1,199 @@
+//Autor: Maykon Mamani Turpo
+//Nro de Registro: 2012115870
+//Tema: Tarea Laboratorio 8
+#include <iostream>
+#include "conio.h"
+
+#define MMAX 100
+#define NMAX 100
+
+using namespace std;
+
+struct Matriz
+{
+    int mat[MMAX][NMAX];
+};
+
+void MostrarMenu()
+{
+    system("cls");
+    cout<<
+        "\n\n\n\n\t<- - - - -- - -M E N U- - - - - - - - ->"<<
+        "\n\n\t\t\t1.)Cargar Matriz 1"<<
+        "\n\n\t\t\t2.)Obtener La Transpuesta"<<
+        "\n\n\t\t\t3.)Cargar Matriz 2 Automaticamente"<<
+        "\n\n\t\t\t3.)Realizar Ejersicio"<<
+        "\n\n\t\t\t0.)salir"
+        <<endl;
+}
+
+void MostrarMenuEjersicio()
+{
+    system("cls");
+    cout<<
+        "\n\n\n\n\t<- - - - -- - -M e n u    E j e r s i c i o- - - - - - - - ->"<<
+        "\n\n\t\t\t1.)Cargar Matriz"<<
+        "\n\n\t\t\t2.)Invertir Diagonales"<<
+        "\n\n\t\t\t0.Salir)"
+        <<endl;
+}
+
+void MostrarMatriz(int mat[][NMAX], int filas, int columnas)
+{
+    system("cls");
+    cout<<"\n\n\n\n\n\n\n"<<endl;
+    for(int i=0;i<filas;i++)
+    {
+        cout<<"\n\t\t\t";
+        for(int j=0;j<columnas;j++)
+        {
+            cout<<mat[i][j]<<"\t";
+        }
+    }
+    cout<<"\n\n\n\t\t\tPresione Cualquier Tecla Para Continuar..."<<endl;
+    _getch();
+}
+
+void ObtenerTranspuesta(int mat[][NMAX], int filas, int columnas)
+{int matTranspuesta[MMAX][NMAX];
+    for(int i=0;i<filas;i++)
+    {
+        for(int j=0;j<columnas;j++)
+        {
+            matTranspuesta[i][j]=mat[j][i];
+        }
+    }
+    mat=matTranspuesta;
+}
+
+void InvertirDiagonal(Matriz mat[][NMAX], int tamaño)
+{
+    for(int l=0;l<tamaño/2;l++)
+    {
+        for(int k=0;k<tamaño;k++)
+        {
+            if(k%2!=0)
+            {
+                Matriz aux0=mat[l][k];
+                mat[l][k]=mat[tamaño-1-l][tamaño-1-j];
+                mat[tamaño-1-l][tamaño-1-j]=aux0;
+
+                int aux1=mat[l][k].mat[0][0];
+                mat[l][k].mat[0][0]=mat[k][l].mat[0][0];
+                mat[k][l].mat[tamaño-1][tamaño-1]=aux1;
+            }
+        }
+    }
+}
+
+void Ejersicio_CargarMatriz(Matriz mat[][NMAX], int tamaño)
+{
+    for(int i=0;i<tamaño;i++)
+    {
+        for(int j=0;j<tamaño;j++)
+        {
+            system("cls");
+            cout<<"\n\n\n\t\t\tElemento ["<<i+1<<"]["<<j+1<<"]"<<endl;
+            for(int k=0;k<tamaño;k++)
+            {
+                for(int l=0;l<tamaño;l++)
+                {
+                    cout<<"\n\n\t\t\tElemento ["<<k+1<<"]["<<l+1<<"]: ";
+                    cin>>mat[i][j].mat[k][l];
+                }
+            }
+        }
+    }
+}
+
+void CargarMatriz(int mat[][NMAX], int filas, int columnas)
+{
+    for(int i=0;i<filas;i++)
+    {
+        for(int j=0;j<columnas;j++)
+        {
+            system("cls");
+            cout<<"\n\n\n\n\n\n\nElemento ["<<i+1<<"]["<<j+1<<"]: ";
+            cin>>mat[i][j];
+        }
+    }
+}
+
+void CargarMatrizAutomaticamente(int mat[][NMAX], int filas, int columnas)
+{
+    for(int i=0;i<filas;i++)
+    {
+        int S=3;
+        for(int j=0;j<columnas;j++)
+        {
+            mat[i][j]=S;
+            S+=3;
+        }
+    }
+}
+
+void MenuEjersicio()
+{Matriz mat[MMAX][NMAX];
+ int tamaño, op;
+ bool salir=false;
+     while(!salir)
+     {
+         MostrarMenuEjersicio();
+         cout<<"\n\n\t\t\tOpcion: ";
+         cin>>op;
+         switch(op)
+         {
+              case 1:
+                system("cls");
+                cout<<"\n\n\t\t\tMatriz Cuadrada (nxn), Digite n: ";
+                cin>>tamaño;
+                Ejersicio_CargarMatriz(mat,tamaño);
+                break;
+            case 2:
+                InvertirDiagonal(mat,tamaño);
+                MostrarMatriz(mat,tamaño,tamaño);
+                break;
+            case 0: salir=true; break;
+            default: cout<<"\n\n\n\t\t\tOpcion No Valida"<<endl; break;
+         }
+     }
+}
+
+void Menu()
+{int mat[MMAX][NMAX], mat0[MMAX][NMAX], filas=0, columnas=0, op;
+ bool salir=false;
+     while(!salir)
+     {
+         MostrarMenu();
+         cout<<"\n\n\t\t\tOpcion: ";
+         cin>>op;
+         switch(op)
+         {
+            case 1:
+                system("cls");
+                cout<<"\n\n\n\t\t\tCantida de Filas: ";
+                cin>>filas;
+                cout<<"\n\n\t\t\tCantida de Columnas: ";
+                cin>>columnas;
+                CargarMatriz(mat,filas,columnas);
+                MostrarMatriz(mat,filas,columnas);
+                break;
+            case 2: 
+                ObtenerTranspuesta(mat,filas,columnas);
+                MostrarMatriz(mat,filas,columnas);
+                break;
+            case 3: 
+                CargarMatrizAutomaticamente(mat0,filas,columnas);
+                MostrarMatriz(mat0,filas,columnas);
+                break;
+            case 4: MenuEjersicio(); break;
+            case 0: salir=true; break;
+            default: cout<<"\n\n\n\t\t\tOpcion No Valida"<<endl; break;
+         }
+     }
+}
+
+int main()
+{
+    Menu();
+}
